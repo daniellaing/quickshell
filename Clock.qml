@@ -21,43 +21,18 @@ Widget {
         Pill {
             icon: "nest_clock_farsight_analog"
 
-            label: Time.format("HH:mm dd/MM")
-            implicitWidth: compact.implicitWidth * 2
+            label: Time.format("HH:mm:ss dd MMM yyyy")
+            implicitWidth: 500
         }
     }
 
-    states: [
-        State {
-            name: "default"
-            when: !mouse.hovered
-
-            PropertyChanges {
-            }
-
-            StateChangeScript {
-                script: {
-                    root.reset();
-                }
-            }
-        },
-        State {
-            name: "hovered"
-            when: mouse.hovered
-
-            PropertyChanges {
-            }
-
-            StateChangeScript {
-                script: {
-                    root.show(hovered);
-                }
-            }
-        }
-    ]
-
-
     HoverHandler {
         id: mouse
+
+        onHoveredChanged: {
+            if (mouse.hovered) root.show(hovered)
+            else root.reset()
+        }
     }
 }
 

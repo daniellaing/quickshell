@@ -8,6 +8,8 @@ Item {
     readonly property Item currentItem: stack.currentItem
     property alias stack: stack
 
+    property int duration: 250
+
     implicitWidth: currentItem ? currentItem.implicitWidth : 0
     implicitHeight: currentItem ? currentItem.implicitHeight : 0
 
@@ -17,34 +19,38 @@ Item {
         initialItem: root.defaultComponent
 
         replaceEnter: Transition {
-            PropertyAnimation {
-                duration: 100
-                from: 0
+            NumberAnimation {
                 property: "opacity"
+                from: 0
                 to: 1
-            }
-
-            PropertyAnimation {
-                duration: 100
-                from: -5
-                property: "anchors.topMargin"
-                to: 0
+                duration: root.duration
+                easing.type: Easing.InOutCubic
             }
         }
 
         replaceExit: Transition {
-            PropertyAnimation {
-                duration: 100
-                from: 1
+            NumberAnimation {
                 property: "opacity"
+                from: 1
                 to: 0
+                duration: root.duration
+                easing.type: Easing.InOutCubic
+            }
+        }
+
+        Component.onCompleted: stack.push(root.defaultItem)
+        onCurrentItemChanged: {
+            if (currentItem) {
+                // Dynamically center the incoming child to the StackView
+                currentItem.anchors.horizontalCenter = stack.horizontalCenter;
+                currentItem.anchors.verticalCenter = stack.verticalCenter;
             }
         }
     }
 
     NumberAnimation {
         id: defaultCurve
-        duration: 250
+        duration: root.duration
         easing.type: Easing.InOutCubic
     }
 
@@ -57,7 +63,6 @@ Item {
     }
 
     function show(component) {
-        if (root.currentItem?.objectName !== component.objectName)
         stack.replace(component)
     }
 
@@ -65,4 +70,5 @@ Item {
         stack.replace(defaultComponent)
     }
 }
+
 

@@ -38,18 +38,4 @@ Rectangle {
             visible: root.label !== ""
         }
     }
-
-    NumberAnimation {
-        id: defaultCurve
-        duration: 250
-        easing.type: Easing.InOutCubic
-    }
-
-    Behavior on implicitWidth {
-        animation: defaultCurve
-    }
-
-    Behavior on implicitHeight {
-        animation: defaultCurve
-    }
 }
