@@ -14,7 +14,7 @@ Rectangle {
     radius: height / 2
     color: "#040e0d"
 
-    anchors.centerIn: parent
+    // anchors.centerIn: parent
 
     RowLayout {
         id: row

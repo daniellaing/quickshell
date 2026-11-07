@@ -1,6 +1,5 @@
 import QtQuick
 import Quickshell
-import QtQuick.Layouts
 
 PanelWindow {
     id: root

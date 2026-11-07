@@ -4,51 +4,56 @@ import QtQuick
 Widget {
     id: root
 
-    defaultComponent: defaultComponent
+    defaultComponent: compact
 
-    Pill {
-        id: defaultComponent
-        icon: "nest_clock_farsight_analog"
+    Component {
+        id: compact
 
-        label: Time.format("HH:mm dd/MM")
+        Pill {
+            icon: "nest_clock_farsight_analog"
+            label: Time.format("HH:mm dd/MM")
+        }
     }
 
-    // Pill {
-    //     id: hovered
-    //     icon: "nest_clock_farsight_analog"
-    //
-    //     label: Time.format("HH:mm dd/MM")
-    //     implicitWidth: defaultComponent.implicitWidth * 2
-    // }
+    Component {
+        id: hovered
 
-    // states: [
-    //     State {
-    //         name: "default"
-    //         when: !mouse.hovered
-    //
-    //         PropertyChanges {
-    //         }
-    //
-    //         StateChangeScript {
-    //             script: {
-    //                 root.stack.replace(defaultComponent);
-    //             }
-    //         }
-    //     }
-    //     State {
-    //         name: "hovered"
-    //         when: mouse.hovered
-    //
-    //         PropertyChanges {
-    //         }
-    //
-    //         StateChangeScript {
-    //             script: {
-    //                 root.stack.replace(hovered);
-    //             }
-    //         }
-    //     }
-    // ]
+        Pill {
+            icon: "nest_clock_farsight_analog"
+
+            label: Time.format("HH:mm dd/MM")
+            implicitWidth: compact.implicitWidth * 2
+        }
+    }
+
+    states: [
+        State {
+            name: "default"
+            when: !mouse.hovered
+
+            PropertyChanges {
+            }
+
+            StateChangeScript {
+                script: {
+                    root.reset();
+                }
+            }
+        },
+        State {
+            name: "hovered"
+            when: mouse.hovered
+
+            PropertyChanges {
+            }
+
+            StateChangeScript {
+                script: {
+                    root.show(hovered);
+                }
+            }
+        }
+    ]
 
 
     HoverHandler {
